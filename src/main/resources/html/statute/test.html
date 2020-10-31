@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="/guguanjia/">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="div">
+    <vue-ueditor-wrap :config="ueditorConfig" v-model="msg"></vue-ueditor-wrap>
+</div>
+
+</body>
+<script type="text/javascript" src="static/vue/vue.js"></script>
+<script type="text/javascript" src="static/vue/axios.js"></script>
+<script type="text/javascript" src="static/vue/vue-ueditor-wrap.min.js"></script>
+<script>
+    let vm=new Vue({
+        el:'#div',
+        data:{
+            ueditorConfig:{
+                //取代 组件默认配置
+                UEDITOR_HOME_URL:"static/ueditor/",
+                maximumWords: 100000, //最大输入数量
+                serverUrl: 'http://35.201.165.105:8000/controller.php'
+            },
+            msg:'<font color="red" >张亮麻辣烫</font>'
+        },
+        methods:{},
+        components:{
+            VueUeditorWrap //引入第三方组件
+        }
+    });
+</script>
+</html>
