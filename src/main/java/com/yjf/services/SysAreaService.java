@@ -3,6 +3,7 @@ package com.yjf.services;
 import com.github.pagehelper.PageInfo;
 import com.yjf.entity.SysArea;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,5 +14,6 @@ import java.util.Map;
 public interface SysAreaService extends BaseService<SysArea,Integer> {
     public PageInfo<SysArea> selectPage(Integer pageNum, Integer pageSize, Map<String,Object> map);
 
+    void insertForeach(List<SysArea> sysAreas);
 
 }

@@ -32,6 +32,11 @@ public class SysAreaServiceImpl extends BaseServiceImpl<SysArea,Integer> impleme
     }
 
     @Override
+    public void insertForeach(List<SysArea> sysAreas) {
+        sysAreaDao.insertForeach(sysAreas);
+    }
+
+    @Override
     public List<SysArea> select(SysArea sysArea) {
         sysArea.setDelFlag("0");
         return super.select(sysArea);

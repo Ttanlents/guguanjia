@@ -4,7 +4,7 @@ let vm=new Vue({
     data:function () {
         return {
             pageInfo:{},
-            condition:{},
+            condition:{sid:'',name:''},
             setting:{
                 data:{
                     simpleData: {
@@ -109,7 +109,12 @@ let vm=new Vue({
         },
         selectAll:function () {
             this.condition.sid='';
+            this.condition.name='';
                 this.selectPage();
+        },
+        selectByName:function () {
+            this.condition.sid='';
+            this.selectPage();
         },
         toUpdate:function (area) {
                 layer.obj = area;
@@ -129,6 +134,28 @@ let vm=new Vue({
 
                     }
                 })
+
+        },
+        doDelete:function (area) {
+            let id=area.id;
+            let name=area.name;
+            layer.confirm("你确定要删除"+name+"吗？", {btn: ['确定', '取消'], title: "提示"}, ()=> {
+                axios({
+                    url:'sysArea/doDelete',
+                    params:{id:id}
+                }).then(response=>{
+                    if (response.data.success){
+                        layer.msg("删除成功")
+                        console.log(this);
+                        this.selectPage();
+                    }else {
+                        layer.msg(response.data.msg)
+                    }
+                }).catch(error=>{
+                    layer.msg(error.message)
+                });
+
+            });
 
         }
     },

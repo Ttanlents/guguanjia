@@ -17,4 +17,6 @@ import java.util.Map;
 public interface SysAreaDao extends Mapper<SysArea> {
     @SelectProvider(value = SysAreaProvider.class,method = "selectPage")
     public List<SysArea> selectPage(Map<String,Object> map);
+
+    void insertForeach(List<SysArea> list);
 }

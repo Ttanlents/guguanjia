@@ -173,7 +173,7 @@
                                         <div class="input-group" style="line-height: 0px;">
 					<span class="input-group-btn">
 						<span class=" btn btn-success btn-sm"
-                              id="search-all-btn">
+                              id="search-all-btn" @click="selectAll">
 							 显示全部
 						</span>
 					</span>
@@ -182,7 +182,7 @@
                                                    name="name" placeholder="区域名称" id="search-input" v-model="condition.name">
                                             <span class="input-group-btn">
 						<span class="btn  btn-success btn-sm"
-                              id="search-btn" @click="selectAll">
+                              id="search-btn" @click="selectByName">
 							搜索 <i class="ace-icon fa fa-search icon-on-right bigger-110"></i>
 						</span>
 					</span>
@@ -191,17 +191,17 @@
                                     </form>
                                 </div>
                                 <div class="widget-toolbar">
-			<span class="btn btn-purple btn-xs"
-                  onclick="Angel.downloadFile('search-form','area/export')">
+			<span class="btn btn-purple btn-xs">
 			<i class="ace-icon fa fa-cloud-upload bigger-130"></i>
-			导出Excel</span>
+                <a :href="['sysArea/downExcelFile/'+pageInfo.pageNum+'/'+pageInfo.pageSize+'?sid='+condition.sid+'&name='+condition.name]">导出Excel</a>
+			</span>
                                 </div>
                                 <div class="widget-toolbar no-border">
 			<span class="btn btn-purple btn-xs" id="importFile">
 				<i class="ace-icon fa fa-cloud-download bigger-130"></i>
 				<span>导入数据</span>
 				<input type="file" class="phide" name="excel"
-                       data-url="area/import" _accept="application/vnd.ms-excel"
+                       data-url="sysArea/uploadExcelFile" _accept="application/vnd.ms-excel"
                        data-progressid="#excel-progress"
                        onchange="Angel.uploadFile.excel(this);"/>
 			</span>
@@ -267,11 +267,7 @@
                                                                 <i class="ace-icon fa fa-pencil bigger-130"></i>
                                                             </a>
 
-                                                            <a class="red" href="javascript:void(0);"
-                                                               data-mode="del" data-title="删除操作"
-                                                               data-msg="<span class='red bigger-120'>你确定删除<重庆市>吗?</span>"
-                                                               data-url="area/delete" data-data="{id:'2'}"
-                                                            >
+                                                            <a class="red" @click="doDelete(area)">
                                                                 <i class="ace-icon fa fa-trash-o bigger-130"></i>
                                                             </a>
                                                         </div>
