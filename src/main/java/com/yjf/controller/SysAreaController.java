@@ -1,16 +1,11 @@
 package com.yjf.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
-import com.yjf.entity.ExportExcel;
 import com.yjf.entity.Result;
 import com.yjf.entity.SysArea;
 import com.yjf.services.SysAreaService;
-import com.yjf.utils.DateUtils;
-import org.apache.commons.io.FileUtils;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -18,10 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.*;
+import java.net.URLEncoder;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author 余俊锋
@@ -47,18 +42,32 @@ public class SysAreaController {
     }
 
     @RequestMapping(value = "downExcelFile/{pageNum}/{pageSize}")
-    public void downExcelFile(@PathVariable Integer pageNum, @PathVariable Integer pageSize, @RequestParam Map<String, Object> map, HttpServletResponse response) {
+    public void downExcelFile(@PathVariable Integer pageNum, @PathVariable Integer pageSize, @RequestParam Map<String, Object> map, HttpServletResponse response) throws IOException {
         PageInfo<SysArea> pageInfo = sysAreaService.selectPage(pageNum, pageSize, map);
         List<SysArea> sysAreaList = pageInfo.getList();
-        ExportExcel<SysArea> ee = new ExportExcel();
+        response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode("区域信息表.xlsx", "UTF-8"));
+        sysAreaService.downloadExcel(response.getOutputStream(),sysAreaList);
+
+
+        /*ExportExcel<SysArea> ee = new ExportExcel();
         String[] headers = {"序号", "上级区域id", "父区域id", "区域编码", "名字", "区域类型", "创建人", "创建时间", "修改人", "修改时间", "备注", "删除标记", "图标"};
         String[] headersName = {"id", "parentId", "parentIds", "code", "name",
                 "type", "createBy", "createDate", "updateBy", "updateDate", "remarks", "delFlag", "icon"};
         String fileName = "区域信息表";
-        ee.exportExcel(headers, headersName, sysAreaList, fileName, response);
+        ee.exportExcel(headers, headersName, sysAreaList, fileName, response);*/
     }
 
-    @RequestMapping(value = "uploadExcelFile")
+    @RequestMapping(value = "uploadExcelFile",method = RequestMethod.POST)
+    @ResponseBody
+    public Result uploadExcel(MultipartFile file) throws IOException {
+        Result result = new Result();
+        sysAreaService.uploadExcel(file.getInputStream());
+        return result;
+    }
+
+
+
+    /*@RequestMapping(value = "uploadExcelFile")
     public void uploadExcel(MultipartFile excel) {
         String filename = excel.getOriginalFilename();
         File file = new File(uploadPath, filename);
@@ -108,7 +117,7 @@ public class SysAreaController {
         }
         sysAreaService.insertForeach(sysAreaList);
 
-    }
+    }*/
 
     @RequestMapping(value = "doDelete")
     @ResponseBody
@@ -136,6 +145,11 @@ public class SysAreaController {
         return "/area/update.html";
     }
 
+    @RequestMapping(value = "toAdd")
+    public String toAdd() {
+        return "/area/add.html";
+    }
+
     @RequestMapping(value = "toSelect")
     public String toSelect() {
         return "/area/select.html";
@@ -157,9 +171,19 @@ public class SysAreaController {
 
     @RequestMapping(value = "doUpdate", method = RequestMethod.PUT)
     @ResponseBody
-    public Result doUpdate(@RequestBody SysArea sysArea) {
+    public Result doUpdate(@RequestBody Map<String,Object> map) {
         Result result = new Result();
-        int i = sysAreaService.updateByPrimaryKeySelective(sysArea);
+        Object areaObj = map.get("area");
+        ObjectMapper mapper = new ObjectMapper();
+        SysArea sysArea=new SysArea();
+        try {
+            String json = mapper.writeValueAsString(areaObj);
+             sysArea = mapper.readValue(json, SysArea.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        map.put("area",sysArea);
+        int i = sysAreaService.updateByParentId(map);
         if (i > 0) {
             return result;
         }

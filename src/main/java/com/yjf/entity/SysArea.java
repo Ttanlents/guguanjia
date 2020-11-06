@@ -1,5 +1,7 @@
 package com.yjf.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -51,6 +53,7 @@ public class SysArea {
      * 创建时间
      */
     @Column(name = "create_date")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createDate;
 
     /**
@@ -63,6 +66,7 @@ public class SysArea {
      * 更新时间
      */
     @Column(name = "update_date")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date updateDate;
 
     /**

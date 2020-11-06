@@ -10,7 +10,7 @@ spring:
       additional-paths: src/main/java
 
   redis:
-    password:
+    password: 12345678
     jedis:
       pool:
         max-idle: 3
@@ -69,3 +69,17 @@ logging:
   #spring.jackson.time-zone=GMT+8
   #spring.jackson.date-format=yyyy-MM-dd HH:mm:ss
 
+#验证码插件配置
+kaptcha:
+  background-color:
+    from: green
+    to: yellow
+  height: 32
+  width: 120
+
+  content:
+    source: 123456789
+
+  font:
+    size: 28
+    name: 微软雅黑

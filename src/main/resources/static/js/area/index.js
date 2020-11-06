@@ -77,7 +77,22 @@ let vm=new Vue({
             return false;
         },
         clickSpan:function(){
-            console.log("点击按钮")
+            console.log("点击按钮");
+            layer.open({
+                type: 2,
+                title: false,
+                area: ['80%', '80%'],
+                content: ['sysArea/toAdd'],
+                end:()=> { //此处用于演示
+
+                    if (layer.success!=undefined&&layer.success){
+                        layer.msg("添加完成!");
+                        this.selectPage();//刷星页面
+                        layer.success=false;
+                    }
+
+                }
+            });
         },
         addHoverDom:function(treeId,treeNode){
             //1.获取节点tid
@@ -87,7 +102,7 @@ let vm=new Vue({
             if (elObject.length>0){
                 return;  //如果已经绑定过了，不再生成添加按钮
                 }
-            let span=`<span class="button add" id="${tId}_add" title="新增" treenode_add="" style=""></span>`
+            let span=`<span class="button add" id="${tId}_add" title="新增" treenode_add="" style="" @click=""></span>`
             $(`#${tId}_a`).append(span);
             //3.绑定点击事件
             $(`#${tId}_add`).on('click',this.clickSpan)
@@ -115,6 +130,31 @@ let vm=new Vue({
         selectByName:function () {
             this.condition.sid='';
             this.selectPage();
+        },
+        doUpload:function(e){
+            let file = e.target.files[0];
+            let formDate=new FormData();
+            formDate.append("file",file); //获取表单对象
+            axios({
+                url:'sysArea/uploadExcelFile',
+                method:'post',
+                data:formDate,
+                headers:{
+                    'Content-type':'multipart/form-data'
+                }
+            }).then(response=>{
+                if (response.data.success){
+                    layer.msg(response.data.msg);
+                    this.selectPage();
+                    this.initTree();
+                }else {
+                    layer.msg(response.data.msg)
+                }
+
+            }).catch(error=>{
+                layer.msg(error.message)
+            });
+
         },
         toUpdate:function (area) {
                 layer.obj = area;

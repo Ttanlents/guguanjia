@@ -1,15 +1,17 @@
 let vm=new Vue({
     el:'.main-content',
     data:{
-        area:{}
+        area:{},
+        params:{}
     },
     /* es6方法语法给默认值，如果有参数就会覆盖默认值*/
     methods:{
         doUpdate:function () {
+            this.params.area=this.area;
             axios({
                 url:'sysArea/doUpdate',
                 method:'put',
-                data: this.area
+                data: this.params
             }).then(response=>{
                 if (response.data.success){
                     parent.layer.success=response.data.success;
@@ -43,6 +45,7 @@ let vm=new Vue({
                     if (layer.parentName!=undefined&&layer.parentName.length>0){
                         this.area.parentId=layer.aid;
                         this.area.parentName=layer.parentName;
+                        this.area.parentIds=layer.parentIds;
                     }
 
                 }
@@ -66,5 +69,6 @@ let vm=new Vue({
     created:function () {
         //从父窗口中取值
         this.area=parent.layer.obj;
+        this.params.oldParentIds=parent.layer.obj.parentIds;
     }
 });

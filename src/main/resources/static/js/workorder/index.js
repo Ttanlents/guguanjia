@@ -112,12 +112,7 @@ let vm=new Vue({
                 content: ['workOrder/toDetail'],
                 end:()=> { //此处用于演示
                         layer.msg("关闭完成!")
-
-
                 }
-
-
-
             })
         }
     },

@@ -1,6 +1,9 @@
 package com.yjf.services;
 
+import com.github.pagehelper.PageInfo;
 import com.yjf.entity.SysUser;
+
+import java.util.List;
 
 /**
  * @author 余俊锋
@@ -8,4 +11,9 @@ import com.yjf.entity.SysUser;
  * @Description
  */
 public interface SysUserService  extends BaseService<SysUser,Integer> {
+   PageInfo<SysUser> selectPage(Integer pageNum,Integer pageSize,SysUser sysUser);
+
+   List<SysUser> selectRole(SysUser sysUser);
+
+   List<SysUser> selectNoRole(Integer officeId,  Integer roleId);
 }

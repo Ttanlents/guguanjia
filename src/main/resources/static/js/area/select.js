@@ -64,6 +64,7 @@ let vm=new Vue({
                 //把id和name往回传
                 parent.layer.aid=treeNode.id;
                 parent.layer.parentName=treeNode.name;
+                parent.layer.parentIds=treeNode.parentIds+treeNode.id+",";
                 let index = parent.layer.getFrameIndex(window.name);
                 console.log(index);
                 parent.layer.close(index)

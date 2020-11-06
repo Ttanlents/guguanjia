@@ -10,7 +10,7 @@
     </button>
 
     <div class="navbar-header pull-left" style="min-width:190px;">
-        <a  class="navbar-brand">
+        <a class="navbar-brand">
             <small>
                 固管家服务平台
             </small>
@@ -37,7 +37,7 @@
             </li>
 
             <li class="purple" style="display:none;">
-                <a data-toggle="dropdown" class="dropdown-toggle" >
+                <a data-toggle="dropdown" class="dropdown-toggle">
                     <i class="ace-icon fa fa-bell icon-animated-bell"></i>
                     <span class="badge badge-important">8</span>
                 </a>
@@ -49,7 +49,7 @@
                     </li>
 
                     <li>
-                        <a >
+                        <a>
                             <div class="clearfix">
 											<span class="pull-left">
 												<i class="btn btn-xs no-hover btn-pink fa fa-comment"></i>
@@ -61,14 +61,14 @@
                     </li>
 
                     <li>
-                        <a >
+                        <a>
                             <i class="btn btn-xs btn-primary fa fa-user"></i>
                             Bob just signed up as an editor ...
                         </a>
                     </li>
 
                     <li>
-                        <a >
+                        <a>
                             <div class="clearfix">
 											<span class="pull-left">
 												<i class="btn btn-xs no-hover btn-success fa fa-shopping-cart"></i>
@@ -80,7 +80,7 @@
                     </li>
 
                     <li>
-                        <a >
+                        <a>
                             <div class="clearfix">
 											<span class="pull-left">
 												<i class="btn btn-xs no-hover btn-info fa fa-twitter"></i>
@@ -92,7 +92,7 @@
                     </li>
 
                     <li class="dropdown-footer">
-                        <a >
+                        <a>
                             See all notifications
                             <i class="ace-icon fa fa-arrow-right"></i>
                         </a>
@@ -101,11 +101,11 @@
             </li>
 
             <li class="light-blue">
-                <a data-toggle="dropdown"  class="dropdown-toggle">
-                    <img class="nav-user-photo" src="static/img/small-male-pic.png" />
+                <a data-toggle="dropdown" class="dropdown-toggle">
+                    <img class="nav-user-photo" src="static/img/small-male-pic.png"/>
                     <span class="user-info">
 									<small>你好,</small>
-									超级管理员
+									{{username}}
 								</span>
 
                     <i class="ace-icon fa fa-caret-down"></i>
@@ -122,7 +122,7 @@
                     <li class="divider"></li>
 
                     <li>
-                        <a href="../login.html">
+                        <a @click="logout">
                             <i class="ace-icon fa fa-power-off"></i>
                             退出
                         </a>
@@ -132,3 +132,39 @@
         </ul>
     </div>
 </div><!-- /.navbar-container -->
+
+<!--<script type="text/javascript" src="static/vue/vue.js"></script>
+<script type="text/javascript" src="static/vue/axios.js"></script>
+<script type="text/javascript" src="static/layer/layer.js"></script>-->
+<script>
+    let vm = new Vue({
+        el: '#navbar-container',
+        data: {
+            username: ''
+        },
+        methods: {
+            logout:function () {
+                axios({
+                    url:'user/logout'
+                }).then(response=>{
+                    if (response.data.success){
+                        layer.msg(response.data.msg)
+                        sessionStorage.clear();
+                        location.href='login.html'
+                    } else{
+                        layer.msg('退出失败，请重试！')
+                    }
+                }).catch(error=>{
+                    layer.msg(error.message)
+                });
+            }
+        },
+        created: function () {
+            let mapJson = sessionStorage.getItem("map");
+            if (mapJson != undefined && mapJson.length > 0) {
+                let map = JSON.parse(mapJson);
+                this.username=map.loginUser.username;
+            }
+        }
+    });
+</script>

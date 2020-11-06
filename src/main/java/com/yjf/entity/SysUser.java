@@ -3,6 +3,7 @@ package com.yjf.entity;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.Date;
 
 @Table(name = "sys_user")
@@ -123,6 +124,39 @@ public class SysUser {
      */
     @Column(name = "head_picture")
     private String headPicture;
+
+    @Transient
+    private String officeName;
+
+    @Transient
+    private String roleName;
+
+    @Transient
+    private String roleId;
+
+    public String getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getOfficeName() {
+        return officeName;
+    }
+
+    public void setOfficeName(String officeName) {
+        this.officeName = officeName;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
 
     /**
      * 获取编号

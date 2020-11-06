@@ -200,10 +200,8 @@
 			<span class="btn btn-purple btn-xs" id="importFile">
 				<i class="ace-icon fa fa-cloud-download bigger-130"></i>
 				<span>导入数据</span>
-				<input type="file" class="phide" name="excel"
-                       data-url="sysArea/uploadExcelFile" _accept="application/vnd.ms-excel"
-                       data-progressid="#excel-progress"
-                       onchange="Angel.uploadFile.excel(this);"/>
+				<input type="file" class="phide" name="file"
+                       @change="doUpload"/>
 			</span>
                                 </div>
                                 <div class="widget-toolbar no-border">

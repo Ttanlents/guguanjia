@@ -3,6 +3,7 @@ package com.yjf.entity;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.Date;
 
 @Table(name = "sys_office")
@@ -133,6 +134,17 @@ public class SysOffice {
      * 备注信息
      */
     private String remarks;
+
+    @Transient
+    private String areaName;
+
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
+    }
 
     /**
      * 获取编号

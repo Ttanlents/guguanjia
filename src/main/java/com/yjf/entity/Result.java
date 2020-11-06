@@ -23,6 +23,16 @@ public class Result implements Serializable {
         this.success=true;
         this.msg="操作成功";
     }
+    public Result(Object obj) {
+        this();
+        this.obj=obj;
+    }
+
+    public Result(boolean success, String msg, Object obj) {
+        this.success = success;
+        this.msg = msg;
+        this.obj = obj;
+    }
 
     public boolean isSuccess() {
         return success;
