@@ -269,21 +269,11 @@
 																<td class="center">{{m.status==0?'正常':'禁用'}}</td>
 																<td class="center">
 																	<div class="hidden-sm hidden-xs action-buttons">
-																		<a class="green" href="menu-save.html"
-																		   data-mode="page" data-title="APP管理编辑"
-																		   data-url="menu/edit/showlayer"
-																		   data-data="{id:'233',parentId:'232'}"
-																		   data-width="50%"
-																		>
+																		<a class="green" @click="toUpdate(m)">
 																			<i class="ace-icon fa fa-pencil bigger-130"></i>
 																		</a>
 
-																		<a class="red" href="javascript:void(0);"
-																		   data-mode="del" data-title="删除操作"
-																		   data-msg="你确定删除<APP管理>节点及其所有的子节点吗?(慎重操作)"
-																		   data-url="menu/delete" data-data="{id:'233'}"
-																		   data-reloadurl="true"
-																		>
+																		<a class="red" @click="doDelete(m)">
 																			<i class="ace-icon fa fa-trash-o bigger-130"></i>
 																		</a>
 																	</div>
@@ -378,7 +368,7 @@
 		<script type="text/javascript" src="static/js/jquery.form.js"></script>
 		<script type="text/javascript" src="static/js/bootstrap-contextmenu.js"></script>
 		<script type="text/javascript" src="static/js/jquery.nicescroll.min.js"></script>
-		<script type="text/javascript" src="static/js/public.js"></script>
+		<!--<script type="text/javascript" src="static/js/public.js"></script>-->
 
 		<script type="text/javascript" src="static/vue/vue.js"></script>
 		<script type="text/javascript" src="static/vue/axios.js"></script>

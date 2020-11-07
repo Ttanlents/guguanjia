@@ -1,5 +1,7 @@
 package com.yjf.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -64,9 +66,11 @@ public class SysResource {
     private String parentIds;
 
     @Column(name = "create_date")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createDate;
 
     @Column(name = "update_date")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date updateDate;
 
     @Column(name = "create_by")

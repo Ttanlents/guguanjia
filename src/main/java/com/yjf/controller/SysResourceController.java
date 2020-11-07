@@ -4,15 +4,18 @@ import com.github.pagehelper.PageInfo;
 import com.yjf.entity.Result;
 import com.yjf.entity.SysOffice;
 import com.yjf.entity.SysResource;
+import com.yjf.entity.SysUser;
 import com.yjf.services.SysOfficeService;
 import com.yjf.services.SysResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 余俊锋
@@ -61,12 +64,91 @@ public class SysResourceController {
         return "/menu/menu.html";
     }
 
+    @RequestMapping("toUpdate")
+    public String toUpdate() {
+        return "/menu/menu-update.html";
+    }
+
+    @RequestMapping("toAdd")
+    public String toAdd() {
+        return "/menu/menu-add.html";
+    }
+
+    @RequestMapping("initMenu")
+    @ResponseBody
+    public Result initMenu() {
+        Result result = new Result();
+        result.setObj(new SysResource());
+        return result;
+    }
+
+    @RequestMapping("toSelect")
+    public String toSelect() {
+        return "/menu/menu-select.html";
+    }
+
+    @RequestMapping("toIcon")
+    public String toIcon() {
+        return "/modules/module.html";
+    }
+
+    @RequestMapping(value = "doUpdate",method = RequestMethod.PUT)
+    @ResponseBody
+    public Result doUpdate(@RequestBody Map<String,Object> map, HttpSession session) {
+        Result result = new Result();
+        int i = sysResourceService.updateByParentId(map);
+        if (i>0){
+            return result;
+        }
+        result.setSuccess(false);
+        result.setMsg("更新失败");
+        return  result;
+
+    }
+
+
+    @RequestMapping(value = "doInsert",method = RequestMethod.PUT)
+    @ResponseBody
+    public Result doInsert(@RequestBody SysResource sysResource, HttpSession session) {
+        SysUser loginUser =(SysUser) session.getAttribute("loginUser");
+        sysResource.setCreateBy(loginUser.getName());
+        sysResource.setCreateDate(new Date());
+        sysResource.setUpdateDate(new Date());
+        sysResource.setDelFlag("0");
+        if (StringUtils.isEmpty(sysResource.getParentId())){
+            sysResource.setParentId(0);
+            sysResource.setParentIds("0,");
+        }
+        Result result = new Result();
+        int i = sysResourceService.insertSelective(sysResource);
+        if (i>0){
+            return result;
+        }
+        result.setSuccess(false);
+        result.setMsg("更新失败");
+        return  result;
+    }
+
     @RequestMapping("selectPage/{pageNum}/{pageSize}")
     @ResponseBody
     public Result selectPage(@PathVariable Integer pageNum, @PathVariable Integer pageSize, String name) {
         Result result = new Result();
         PageInfo<SysResource> pageInfo = sysResourceService.selectPage(pageNum, pageSize,name);
         result.setObj(pageInfo);
+        return result;
+    }
+
+    @RequestMapping(value = "doDelete",method = RequestMethod.PUT)
+    @ResponseBody
+    public Result doDelete(@RequestBody SysResource sysResource) {
+        Result result = new Result();
+        sysResource.setDelFlag("1");
+        int i = sysResourceService.updateByPrimaryKeySelective(sysResource);
+        if (i>0){
+            return  result;
+        }
+        result.setMsg("删除失败");
+        result.setSuccess(false);
         return result;
     }
 

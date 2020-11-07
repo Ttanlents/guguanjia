@@ -61,9 +61,68 @@ let vm=new Vue({
                 layer.msg(error.message)
            });
        },
+       doDelete:function(m){
+          layer.confirm(`你确定要删除${m.name}吗？`,{
+              btn: ['确定','取消'],
+              title:"提示"
+          },()=>{
+              axios({
+                  url:'sysResource/doDelete',
+                  method:'put',
+                  data:m
+              }).then(response=>{
+                  if (response.data.success){
+                      layer.msg(response.data.msg);
+                  }else{
+                      layer.msg(response.data.msg);
+                  }
+              }).catch(error=>{
+                  layer.msg(error.message);
+              });
+          })
+       },
+       toUpdate:function(m){
+           layer.obj=m;
+           console.log(layer.obj);
+           layer.open({
+               type: 2,
+               title:false,
+               area:['80%','80%'],
+               content:['sysResource/toUpdate'],
+               end:()=>{
+                   if (layer.success!=undefined&&layer.success){
+                       layer.msg('更新完成');
+                       layer.success=false;
+                       /*this.selectPage();*/
+                       location.href("sysResource/toIndex")
+                   }
+
+
+               }
+           });
+       },
        selectAll:function () {
            this.name='';
            this.selectPage()
+       },
+       clickSpan:function(){
+
+           layer.open({
+               type: 2,
+               title: false,
+               area: ['80%', '80%'],
+               content: ['sysResource/toAdd'],
+               end:()=> { //此处用于演示
+
+                   if (layer.success!=undefined&&layer.success){
+                       layer.msg("添加完成!");
+                       this.selectPage();//刷星页面
+                       layer.success=false;
+                       location.href("sysResource/toIndex");
+                   }
+
+               }
+           });
        },
        beforeEditName:function(treeId,treeNode){
            return false;
@@ -82,7 +141,8 @@ let vm=new Vue({
            let span=`<span class="button add" id="${tId}_add" title="新增" treenode_add="" style="" @click=""></span>`
            $(`#${tId}_a`).append(span);
            //3.绑定点击事件
-           $(`#${tId}_add`).on('click',this.clickSpan)
+           $(`#${tId}_add`).on('click',this.clickSpan);
+           layer.parentNode=treeNode;
        },
        removeHoverDom:function(treeId,treeNode){
            let tId=treeNode.tId;

@@ -5,6 +5,7 @@ import com.yjf.entity.SysResource;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 余俊锋
@@ -17,4 +18,6 @@ public interface SysResourceService extends BaseService<SysResource,Integer> {
   List<SysResource>  selectCommonResources();
 
   PageInfo<SysResource> selectPage(Integer pageNum,Integer pageSize,String name);
+
+  int updateByParentId(Map<String,Object> map);
 }

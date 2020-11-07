@@ -46,9 +46,7 @@
 <body class="no-skin" id="body-content">
 <!-- 顶部条 -->
 <div id="navbar" class="navbar navbar-default">
-<!--  插入navbar.html-->
 
-	<!-- /.navbar-container -->
 </div>
 <!-- 主体 -->
 <div class="main-container" id="main-container">
@@ -56,7 +54,7 @@
 
 
 	<div id="sidebar" class="sidebar responsive">
-		<!--插入sidebar.html-->
+
 
 	</div>
 
@@ -66,9 +64,7 @@
 
 
 			<ul class="tab" id="breadcrumb">
-				<!-- <li class="active" >
-               菜单配置<i class="fa fa-times close"></i>
-               </li>  -->
+
 			</ul><!-- /.breadcrumb -->
 			<div id="tab-menu">
 				<ul class="dropdown-menu dropdown-caret" style="min-width: 0px;">
@@ -117,11 +113,7 @@
 																		   for="ace-settings-breadcrumbs"> 固定导航条</label>
 						</div>
 
-						<!-- <div class="ace-settings-item">
-                            <input type="checkbox" class="ace ace-checkbox-2"
-                                id="ace-settings-rtl" /> <label class="lbl" for="ace-settings-rtl">
-                                Right To Left (rtl)</label>
-                        </div> -->
+
 
 						<div class="ace-settings-item">
 							<input type="checkbox" class="ace ace-checkbox-2"
@@ -255,12 +247,8 @@
 								</div>
 							</div>
 						</div>
-						<style>
-							#profile .center>label{width: 100px;text-align: right;}
-						</style>
-						<!--<script>
-                            $("#search-form").getPageList({'submitBtnId':'search-btn'});
-						</script>-->
+
+
 					</div>
 
 				</div>
@@ -284,27 +272,7 @@
 <script src="static/ace/js/ace-elements.min.js"></script>
 <script src="static/ace/js/ace.min.js"></script>
 
-<script type="text/javascript">
-	try{ace.settings.check('navbar' , 'fixed')}catch(e){}
 
-	try{ace.settings.check('main-container' , 'fixed')}catch(e){}
-
-	try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
-
-	try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
-
-	try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
-    window.onload=function(){
-        /* $("#ace-settings-navbar").trigger("click");//固定头部导航栏
-        $("#ace-settings-sidebar").trigger("click");//固定左侧菜单
-        $("#ace-settings-highlight").trigger("click"); */
-    };
-
-	$(function () {
-        $('#navbar').load("getNavBar");
-        $('#sidebar').load("getSideBar");
-    });
-</script>
 
 <!-- 引入其他js -->
 <script src="static/js/history.js"></script>
@@ -321,10 +289,17 @@
 
 <script type="text/javascript" src="static/jquery/jquery.js"></script>
 <script type="text/javascript" src="static/vue/vue.js"></script>
-<script type="text/javascript" src="static/vue/vue_router.js"></script>
+
 <script type="text/javascript" src="static/vue/axios.js"></script>
 <script type="text/javascript" src="static/layer/layer.js"></script>
 <script type="text/javascript" src="static/js/demand/index.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#navbar').load("getNavBar");
+        $('#sidebar').load("getSideBar");
+    });
+</script>
 
 
 </body>

@@ -32,7 +32,7 @@ let vm=new Vue({
                         this.selectPage() //刷星页面
                     }
 
-                    // });
+
                 }
             })
         },

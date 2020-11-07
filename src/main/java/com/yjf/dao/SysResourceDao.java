@@ -3,6 +3,7 @@ package com.yjf.dao;
 import com.yjf.entity.SysResource;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
@@ -63,4 +64,13 @@ public interface SysResourceDao extends Mapper<SysResource> {
             "WHERE\n" +
             "\tsr.del_flag = '0' and sr.name like CONCAT('%',#{name},'%')")
     List<SysResource> selectPage(@Param("name") String name);
+
+
+    @Update("UPDATE sys_resource  " +
+            "SET parent_ids = REPLACE ( parent_ids, #{oldParentIds}, #{parentIds} )  " +
+            "WHERE " +
+            "FIND_IN_SET( " +
+            "#{parentId}, " +
+            "parent_ids)")
+    int updateByParentId(@Param("oldParentIds") String oldParentIds,@Param("parentIds") String parentIds,@Param("parentId") String parentId);
 }
