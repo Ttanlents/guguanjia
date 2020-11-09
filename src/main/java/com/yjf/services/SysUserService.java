@@ -3,6 +3,7 @@ package com.yjf.services;
 import com.github.pagehelper.PageInfo;
 import com.yjf.entity.SysUser;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -16,4 +17,7 @@ public interface SysUserService  extends BaseService<SysUser,Integer> {
    List<SysUser> selectRole(SysUser sysUser);
 
    List<SysUser> selectNoRole(Integer officeId,  Integer roleId);
+
+   int insertSelective(SysUser sysUser, HttpSession session);
+   int updateByPrimaryKeySelective(SysUser sysUser,HttpSession session);
 }

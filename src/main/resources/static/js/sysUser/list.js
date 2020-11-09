@@ -5,12 +5,13 @@ let vm=new Vue({
             pageInfo:{
 
             },
+            active:true,
             name:'全部',   //1.绑定的数据
             name2:'请选择归属机构',
             searchName:'',
             searchName2:'',
-            condition:{officeId:'',roleId:''},
-            sysUser:{roleId:''},  //366
+            condition:{officeId:'',roleId:''},  //条件查询专用
+            sysUser:{roleId:''},  //添加专用
             setting:{
                 data:{
                     simpleData:{
@@ -48,7 +49,27 @@ let vm=new Vue({
     },
     methods: {
         doSave:function(){
-            console.log(this.sysUser)
+            if (this.sysUser.password!=this.sysUser.repassword){
+                layer.msg("两次输入的密码不一致！")
+            }else {
+                axios({
+                    url:'sysUser/doSave',
+                    method:'put',
+                    data:this.sysUser
+                }).then(response=>{
+                    if (response.data.success){
+                        layer.msg(response.data.msg)
+                        //1.清空列表
+                        this.sysUser={};
+                        //2.切换到左边的ui
+                        this.active=!this.active;
+                    }else {
+                        layer.msg(response.data.msg)
+                    }
+                }).catch(error=>{
+
+                });
+            }
         },
         selectPage: function (pageNum = 1, pageSize = 5) {
             axios({
@@ -150,7 +171,53 @@ let vm=new Vue({
                 paramFuzzyObj[i].height=true;
                 treeObj.updateNode(paramFuzzyObj[i])
             }
+        },
+        changeActive:function (number) {
+
+            if (number==1){
+                this.active=true;
+            }else {
+                this.active=false;
+            }
+        },
+        toUpdate:function (sysUser) {
+            layer.obj = sysUser;
+            console.log(layer.obj);
+            layer.open({
+                type: 2,
+                title: false,
+                area: ['80%', '80%'],
+                content: ['sysUser/toUpdate'],
+                end:()=> { //此处用于演示
+                    if (layer.success!=undefined&&layer.success){
+                        layer.msg("更新完成!");
+                        this.selectPage() //刷星页面
+                    }
+
+                }
+            })
+        },
+        doDelete:function (sysUser) {
+            layer.confirm(`你确定要删除${sysUser.name}吗？`,{
+                btn: ['确定','取消'],
+                title:"提示"
+            },()=>{
+                axios({
+                    url:'sysUser/doDelete',
+                    params:{id:sysUser.id}
+                }).then(response=>{
+                    if (response.data.success){
+                        layer.msg(response.data.msg);
+                        this.selectPage();
+                    }else{
+                        layer.msg(response.data.msg);
+                    }
+                }).catch(error=>{
+                    layer.msg(error.message);
+                });
+            })
         }
+
     },
     created:function () {
         this.selectPage();

@@ -373,4 +373,28 @@ public class SysResource {
     public void setPermissionStr(String permissionStr) {
         this.permissionStr = permissionStr == null ? null : permissionStr.trim();
     }
+
+    @Override
+    public String toString() {
+        return "SysResource{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", common='" + common + '\'' +
+                ", icon='" + icon + '\'' +
+                ", sort=" + sort +
+                ", parentId=" + parentId +
+                ", type='" + type + '\'' +
+                ", url='" + url + '\'' +
+                ", description='" + description + '\'' +
+                ", status='" + status + '\'' +
+                ", parentIds='" + parentIds + '\'' +
+                ", createDate=" + createDate +
+                ", updateDate=" + updateDate +
+                ", createBy='" + createBy + '\'' +
+                ", updateBy='" + updateBy + '\'' +
+                ", delFlag='" + delFlag + '\'' +
+                ", permissionStr='" + permissionStr + '\'' +
+                ", parentName='" + parentName + '\'' +
+                '}';
+    }
 }

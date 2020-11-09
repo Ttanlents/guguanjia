@@ -1,5 +1,5 @@
 let vm=new Vue({
-    el:'.tabbable',
+    el:'.main-content',
     data:{
         result:{},
         pageInfo:{}
@@ -12,7 +12,6 @@ let vm=new Vue({
                 console.log(response.data)
                 this.pageInfo=response.data.obj;
                 this.result=response.data.obj.list;
-                console.log("赋值成功！")
             }).catch(error=>{
                 layer.msg(error.message)
             })
@@ -27,9 +26,11 @@ let vm=new Vue({
                 content: ['demand/toUpdate'],
                 end:()=> { //此处用于演示
 
-                   if (layer.obj2.msg==0){
-                        layer.msg("更新完成!")
+                   if (layer.success!=undefined&&layer.success){
+                        layer.msg("更新完成!");
+                        layer.success=false;
                         this.selectPage() //刷星页面
+
                     }
 
 
@@ -37,13 +38,6 @@ let vm=new Vue({
             })
         },
         toDetail:function (demand) {
-          // window.location.href="demand/toDetail?id="+demand.id
-            /*et routeData = this.$router.resolve({
-                path:'demand/toDetail',
-                query:demand
-            });
-            window.open(routeData.href, '_blank');*/
-            //iframe窗
             layer.obj = demand;
             layer.open({
                 type: 2,

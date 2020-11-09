@@ -111,7 +111,9 @@ public class SysResourceController {
     @ResponseBody
     public Result doInsert(@RequestBody SysResource sysResource, HttpSession session) {
         SysUser loginUser =(SysUser) session.getAttribute("loginUser");
-        sysResource.setCreateBy(loginUser.getName());
+       if (loginUser!=null){
+           sysResource.setCreateBy(loginUser.getName());
+       }
         sysResource.setCreateDate(new Date());
         sysResource.setUpdateDate(new Date());
         sysResource.setDelFlag("0");

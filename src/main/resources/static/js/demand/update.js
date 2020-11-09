@@ -1,5 +1,5 @@
 let vm=new Vue({
-    el:'.page-content',
+    el:'.main-content',
     data:{
         demand:{}
     },
@@ -12,8 +12,8 @@ let vm=new Vue({
                 data:this.demand
             }).then(response=>{
                 if (response.data.success){
-                    layer.msg(response.data.msg)
-                    parent.layer.obj2={"msg":0}
+                    layer.msg(response.data.msg);
+                    parent.layer.success=true;
                     let index=parent.layer.getFrameIndex(window.name);
                     parent.layer.close(index);
                 }else{
@@ -26,9 +26,8 @@ let vm=new Vue({
         },
         doClose:function () {
             let index=parent.layer.getFrameIndex(window.name);
-            console.log(index);
-            parent.layer.obj2={"msg":1}
             parent.layer.close(index);
+
         }
     },
     created:function () {

@@ -171,19 +171,19 @@
                     <div id="fill-main-content" style="height:100%">
                         <div class="tabbable">
                             <ul class="nav nav-tabs" id="myTab">
-                                <li class="active">
-                                    <a data-toggle="tab" href="#home">
+                                <li :class="active?'active':''" @click="changeActive(1)">
+                                    <a data-toggle="tab">
                                         <i class="green ace-icon fa fa-users bigger-120"></i> 用户列表
                                     </a>
                                 </li>
 
-                                <li class=""><a data-toggle="tab" href="#profile">
+                                <li :class="!active?'active':''" @click="changeActive(2)"><a data-toggle="tab">
                                     <i class="green ace-icon fa fa-plus bigger-120"></i> 用户添加
                                 </a></li>
                             </ul>
 
                             <div class="tab-content">
-                                <div id="home" class="tab-pane active clearfix">
+                                <div id="home" class="tab-pane  clearfix" :class="active?'active':''">
                                     <div class="widget-container-col ui-sortable">
                                         <div class="widget-box ">
                                             <div class="widget-header widget-header-small">
@@ -318,17 +318,11 @@
                                                 <td class="center">
                                                     <div class="hidden-sm hidden-xs action-buttons">
 
-                                                        <a class="green" href="detail.html" title="编辑"
-                                                           data-mode="page" data-title="超级管理员编辑"
-                                                           data-url="sysuser/edit/showlayer"
-                                                           data-data="{id:'2'}" data-width="50%">
+                                                        <a class="green" @click="toUpdate(sysUser)">
                                                             <i class="ace-icon fa fa-pencil bigger-130"></i>
                                                         </a>
 
-                                                        <a class="red" href="javascript:void(0);" title="删除"
-                                                           data-mode="del" data-title="删除操作"
-                                                           data-msg="你确定删除此数据吗?"
-                                                           data-url="sysuser/delete" data-data="{id:'2'}">
+                                                        <a class="red" @click="doDelete(sysUser)">
                                                             <i class="ace-icon fa fa-trash-o bigger-130"></i>
                                                         </a>
                                                     </div>
@@ -363,7 +357,7 @@
                                     </div>
                                 </div>
 
-                                <div id="profile" class="tab-pane">
+                                <div id="profile" :class="!active?'active':''" class="tab-pane">
                                     <form  id="sysuser-save-form">
                                         <div class="center padding-10">
                                             <label>登录名：</label>
@@ -458,8 +452,8 @@
                                             <label style="vertical-align: top;">描述：</label>
                                             <textarea type="text" class="width-50" name="remarks" v-model="sysUser.remarks"></textarea>
                                         </div>
-                                        <div class="margin-t15">
-                                            <span class="btn btn-info btn-block bigger-120" id="sysuser-save-btn" @click="doSave">保 存</span>
+                                        <div class="margin-t15"  @click="doSave">
+                                            <span class="btn btn-info btn-block bigger-120" id="sysuser-save-btn">保 存</span>
                                         </div>
                                     </form>
                                 </div>

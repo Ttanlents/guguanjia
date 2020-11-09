@@ -21,6 +21,26 @@ spring:
     username: root
     password: 12345678
     type: com.alibaba.druid.pool.DruidDataSource
+    #druid 性能监控配置
+    druid:
+      stat-view-servlet:
+        enabled: true
+        login-username: druid
+        login-password: 123
+        url-pattern: /druid/*
+      filter:
+        stat:
+          enabled: true   #sql监控
+        wall:
+          enabled: true  #sql防火墙
+      web-stat-filter:
+        enabled: true    #web监控
+        url-pattern: /*
+        exclusions: "*.js,*.jsp,*.png,*.css,/druid/*"
+        #默认设置了
+        profile-enable: true  #开启当前url执行的sql监控
+        principal-session-name: loginUser
+        session-stat-enable: true     #开启session监控
 
   jackson:
     time-zone: GMT+8

@@ -6,9 +6,10 @@ import com.yjf.entity.SysUser;
 import com.yjf.services.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 /**
  * @author 余俊锋
@@ -25,12 +26,60 @@ public class SysUserController {
         return "/user/user-list.html";
     }
 
+    @RequestMapping("toUpdate")
+    public String toUpdate(){
+        return "/user/update.html";
+    }
+
     @RequestMapping("selectPage/{pageNum}/{pageSize}")
     @ResponseBody
     public Result selectPage(@PathVariable Integer pageNum, @PathVariable Integer pageSize, SysUser sysUser) {
         Result result = new Result();
         PageInfo<SysUser> pageInfo = sysUserService.selectPage(pageNum, pageSize,sysUser);
         result.setObj(pageInfo);
+        return result;
+    }
+
+    @RequestMapping(value = "doSave",method = RequestMethod.PUT)
+    @ResponseBody
+    public Result doSave(@RequestBody SysUser sysUser, HttpSession session) {
+        Result result = new Result( );
+        int i = sysUserService.insertSelective(sysUser,session);
+        if (i>0){
+            return result;
+        }
+        result.setSuccess(false);
+        result.setMsg("添加失败");
+        return result;
+    }
+
+    @RequestMapping(value = "doUpdate",method = RequestMethod.PUT)
+    @ResponseBody
+    public Result doUpdate(@RequestBody SysUser sysUser,HttpSession session) {
+        Result result = new Result( );
+        int i = sysUserService.updateByPrimaryKeySelective(sysUser,session);
+        if (i>0){
+            return result;
+        }
+        result.setSuccess(false);
+        result.setMsg("添加失败");
+        return result;
+    }
+
+    @RequestMapping(value = "doDelete")
+    @ResponseBody
+    public Result doDelete(Integer id){
+        Result result = new Result( );
+        SysUser sysUser = new SysUser();
+        sysUser.setId(id);
+        sysUser.setUpdateDate(new Date());
+        sysUser.setDelFlag("1");
+        int i = sysUserService.updateByPrimaryKeySelective(sysUser);
+        if (i>0){
+            return result;
+        }
+        result.setSuccess(false);
+        result.setMsg("删除失败");
         return result;
     }
 }

@@ -1,5 +1,5 @@
 let vm=new Vue({
-    el:'.xuboxPageHtml',
+    el:'.main-content',
     data:{
         demand:{}
     },
@@ -9,6 +9,6 @@ let vm=new Vue({
     created:function () {
         //从父窗口中取值
         this.demand=parent.layer.obj;
-        console.log(this.demand)
+
     }
 });

@@ -244,4 +244,24 @@ public class WorkOrder {
     public void setCreateBy(String createBy) {
         this.createBy = createBy;
     }
+
+    @Override
+    public String toString() {
+        return "WorkOrder{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", createUserId=" + createUserId +
+                ", transportUserId=" + transportUserId +
+                ", recipientUserId=" + recipientUserId +
+                ", status=" + status +
+                ", createDate=" + createDate +
+                ", updateDate=" + updateDate +
+                ", delFlag='" + delFlag + '\'' +
+                ", createBy='" + createBy + '\'' +
+                ", createUserName='" + createUserName + '\'' +
+                ", transportUserName='" + transportUserName + '\'' +
+                ", recipientUsername='" + recipientUsername + '\'' +
+                ", createOfficeName='" + createOfficeName + '\'' +
+                '}';
+    }
 }

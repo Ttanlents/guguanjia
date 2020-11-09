@@ -42,4 +42,14 @@ public class QualificationCondition {
     public void setCheck(String check) {
         this.check = check;
     }
+
+    @Override
+    public String toString() {
+        return "QualificationCondition{" +
+                "startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", type='" + type + '\'' +
+                ", check='" + check + '\'' +
+                '}';
+    }
 }
