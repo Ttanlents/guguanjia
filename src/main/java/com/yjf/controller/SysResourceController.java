@@ -74,6 +74,11 @@ public class SysResourceController {
         return "/menu/menu-add.html";
     }
 
+    @RequestMapping("toDetail")
+    public String toDetail() {
+        return "/menu/menu-detail.html";
+    }
+
     @RequestMapping("initMenu")
     @ResponseBody
     public Result initMenu() {

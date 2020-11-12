@@ -10,7 +10,7 @@ import com.yjf.entity.SysLog;
  */
 public interface SysLogService extends BaseService<SysLog,Integer> {
 
-     PageInfo<SysLog> selectPage(Integer pageNum, Integer pageSize);
+     PageInfo<SysLog> selectPage(Integer pageNum, Integer pageSize,SysLog sysLog);
 
 
 }

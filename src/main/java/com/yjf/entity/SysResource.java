@@ -88,6 +88,9 @@ public class SysResource {
     @Transient
     private String parentName;
 
+
+
+
     public String getParentName() {
         return parentName;
     }

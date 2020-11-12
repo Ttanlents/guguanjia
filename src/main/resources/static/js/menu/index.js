@@ -101,6 +101,18 @@ let vm=new Vue({
                }
            });
        },
+       toDetail:function(m){
+           layer.obj=m;
+           layer.open({
+               type:2,
+               title:false,
+               area:['80%','80%'],
+               content:'sysResource/toDetail',
+               end:()=>{
+
+               }
+           });
+       },
        selectAll:function () {
            this.name='';
            this.selectPage()

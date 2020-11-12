@@ -11,7 +11,7 @@ var vm=new Vue({
 
             axios({
                 url:`manager/app/selectPage/${pageNums}/${pageSize}`,
-                // param:{""},
+                // params:{""},
                // data:{"page":_this.page,"name":_this.name}
             }).then(response=> {
                 console.log(response.data)

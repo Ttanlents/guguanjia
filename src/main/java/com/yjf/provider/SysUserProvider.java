@@ -12,7 +12,7 @@ import org.springframework.util.StringUtils;
 public class SysUserProvider {
     public String selectPage(SysUser sysUser){
         String sql = new SQL() {{
-            SELECT("su.*, " +
+            SELECT("DISTINCT su.*, " +
                     "so.`name` office_name," +
                     "sr.id role_id," +
                     "sr.`name` role_name " +

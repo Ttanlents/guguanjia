@@ -237,10 +237,7 @@
 															<tr v-for="m in pageInfo.list"> <!--标记-->
 																<td class="center">{{m.id}}</td>
 																<td class="center">
-																	<a href="menu-detail.html"
-																	   data-title="APP管理详情" data-mode="detail"
-																	   data-url="menu/detail/showlayer"
-																	   data-data="{id:'233'}">
+																	<a @click="toDetail(m)">
 																		{{m.name}}</a>
 																</td>
 																<td class="center">

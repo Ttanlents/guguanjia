@@ -1,10 +1,13 @@
 package com.yjf.Test;
 
 import com.yjf.GuguanjiaApplication;
-import com.yjf.dao.SysResourceDao;
+import com.yjf.dao.SysLogDao;
+import com.yjf.entity.SysLog;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 /**
  * @author 余俊锋
@@ -14,13 +17,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest(classes = GuguanjiaApplication.class)
 public class test {
     @Autowired
-    SysResourceDao sysResourceDao;
+    SysLogDao sysLogDao;
 
     @Test
     public void myTest(){
        // EasyExcel.write("d:/pic/area.xlsx", SysArea.class).sheet("区域信息").doWrite(sysAreaService.selectAll());
         //EasyExcel.read("d:/pic/区域信息表.xlsx", SysArea.class,new SysAreaListener(sysAreaDao)).sheet().doRead();
-       sysResourceDao.updateByParentId("0,","0,209","190,");
+        SysLog sysLog = new SysLog();
+        sysLog.setDescription(null);
+        sysLog.setType("2");
+        List<SysLog> select = sysLogDao.select(sysLog);
+        System.out.println(select);
     }
 
 }

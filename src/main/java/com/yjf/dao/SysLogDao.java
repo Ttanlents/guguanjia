@@ -2,7 +2,11 @@ package com.yjf.dao;
 
 
 import com.yjf.entity.SysLog;
+import com.yjf.provider.SysLogProvider;
+import org.apache.ibatis.annotations.SelectProvider;
 import tk.mybatis.mapper.common.Mapper;
+
+import java.util.List;
 
 /**
  * @author 余俊锋
@@ -16,5 +20,12 @@ public interface SysLogDao extends Mapper<SysLog> {
     //继承通用mapper,会生成代理子类，是tkmapper提供的代理子类
     //实现的基本的crud
     //查看接口，其实是基于注解的provide动态sql来实现的
+
+
+    @SelectProvider(value = SysLogProvider.class,method = "selectPage")
+    List<SysLog> selectPage(SysLog sysLog);
+
+
+
 
 }

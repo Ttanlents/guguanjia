@@ -65,7 +65,6 @@
 <div class="main-container" id="main-container">
 
 
-
     <div id="sidebar" class="sidebar responsive">
 
     </div>
@@ -186,12 +185,13 @@
                                         <div class="input-group" style="line-height: 0px;">
 					<span class="input-group-btn">
 						<span class=" btn  btn-success btn-sm"
-                              id="search-all-btn">
+                              id="search-all-btn" @click="selectAll">
 							 显示全部
 						</span>
 					</span>
                                             <input type="text" class="form-control search-query"
-                                                   name="name" placeholder="机构名称" id="search-input" v-model="condition.name">
+                                                   name="name" placeholder="机构名称" id="search-input"
+                                                   v-model="condition.name" @keydown.enter="selectPage()">
                                             <span class="input-group-btn">
 						<span class="btn  btn-success btn-sm"
                               id="search-btn" @click="selectPage()">
@@ -210,7 +210,7 @@
                                         <div class="col-sm-4">
                                             <div>
                                                 <ul id="treeMenu" class="ztree">
-                                                    <!--这里插入zTree-->
+                                                    <!--这里插入树-->
                                                 </ul>
                                             </div>
                                         </div>
@@ -251,20 +251,12 @@
                                                     </td>
                                                     <td class="center">
                                                         <div class="hidden-sm hidden-xs action-buttons">
-                                                            <a class="green" href="save.html"
-                                                               data-mode="page" data-title="<固管家服务平台>编辑"
-                                                               data-url="office/edit/showlayer"
-                                                               data-data="{id:'56',parentId:''}"
-                                                               data-width="50%"
+                                                            <a class="green" @click="toUpdate(office)"
                                                             >
                                                                 <i class="ace-icon fa fa-pencil bigger-130"></i>
                                                             </a>
 
-                                                            <a class="red" href="javascript:void(0);"
-                                                               data-mode="del" data-title="删除操作"
-                                                               data-msg="你确定删除<固管家服务平台>节点及其所有的子节点吗?(慎重操作)"
-                                                               data-url="office/delete" data-data="{id:'56'}"
-                                                            >
+                                                            <a class="red" @click="doDelete(office.id)">
                                                                 <i class="ace-icon fa fa-trash-o bigger-130"></i>
                                                             </a>
                                                         </div>
@@ -283,14 +275,27 @@
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <div class="pagination no-margin pull-right clearfix">  <!--加括号使用默认传参数-->
-                                                        <li class="prev"><a href="javascript:void(0);" @click="selectPage()">首页</a></li>
-                                                        <li v-if="pageInfo.hasPreviousPage" class="prev"><a href="javascript:void(0);" @click="selectPage(pageInfo.prePage,pageInfo.pageSize)">上一页</a></li>
-                                                        <li v-else class="prev disabled"><a >上一页</a></li>
-                                                        <li :class="pageInfo.pageNum==i?'active':''" v-for="i in pageInfo.navigatepageNums"><a href="javascript:void(0);" @click="selectPage(i,pageInfo.pageSize)">{{i}}</a></li>
-                                                        <li v-if="pageInfo.hasNextPage"  class="next"><a href="javascript:void(0);" @click="selectPage(pageInfo.nextPage,pageInfo.pageSize)">下一页</a></li>
-                                                        <li v-else  class="next disabled"><a>下一页</a></li>
-                                                        <li class="next"><a href="javascript:void(0);" @click="selectPage(pageInfo.pages,pageInfo.pageSize)">尾页</a></li>
+                                                    <div class="pagination no-margin pull-right clearfix">
+                                                        <!--加括号使用默认传参数-->
+                                                        <li class="prev"><a href="javascript:void(0);"
+                                                                            @click="selectPage()">首页</a></li>
+                                                        <li v-if="pageInfo.hasPreviousPage" class="prev"><a
+                                                                href="javascript:void(0);"
+                                                                @click="selectPage(pageInfo.prePage,pageInfo.pageSize)">上一页</a>
+                                                        </li>
+                                                        <li v-else class="prev disabled"><a>上一页</a></li>
+                                                        <li :class="pageInfo.pageNum==i?'active':''"
+                                                            v-for="i in pageInfo.navigatepageNums"><a
+                                                                href="javascript:void(0);"
+                                                                @click="selectPage(i,pageInfo.pageSize)">{{i}}</a></li>
+                                                        <li v-if="pageInfo.hasNextPage" class="next"><a
+                                                                href="javascript:void(0);"
+                                                                @click="selectPage(pageInfo.nextPage,pageInfo.pageSize)">下一页</a>
+                                                        </li>
+                                                        <li v-else class="next disabled"><a>下一页</a></li>
+                                                        <li class="next"><a href="javascript:void(0);"
+                                                                            @click="selectPage(pageInfo.pages,pageInfo.pageSize)">尾页</a>
+                                                        </li>
                                                     </div>
 
                                                 </div>
@@ -301,7 +306,6 @@
                                 </div>
                             </div>
                         </div>
-
 
 
                     </div>
@@ -331,7 +335,6 @@
 <script src="static/ace/js/ace.min.js"></script>
 
 
-
 <!-- 引入其他js -->
 <script src="static/js/history.js"></script>
 <script type="text/javascript" src="static/layer/layer.js"></script>
@@ -351,7 +354,7 @@
 <script type="text/javascript" src="static/js/office/index.js"></script>
 
 <script>
-    $(function(){
+    $(function () {
         $('#navbar').load("getNavBar");
         $('#sidebar').load("getSideBar");
     });

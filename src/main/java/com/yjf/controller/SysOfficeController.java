@@ -6,9 +6,7 @@ import com.yjf.entity.SysOffice;
 import com.yjf.services.SysOfficeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -47,10 +45,71 @@ public class SysOfficeController {
         result.setObj(pageInfo);
         return result;
     }
+
+    @RequestMapping(value = "doUpdate",method = RequestMethod.PUT)
+    @ResponseBody
+    public Result doUpdate(@RequestBody SysOffice sysOffice) {
+        Result result = new Result();
+        int i = sysOfficeService.updateByPrimaryKeySelective(sysOffice);
+        if (i>0){
+            return result;
+        }
+        result.setSuccess(false);
+        result.setMsg("修改失败");
+        return result;
+    }
     
     @RequestMapping(value = "toIndex")
     public String toIndex() {
         return "/office/office.html";
     }
+
+    @RequestMapping(value = "toUpdate")
+    public String toUpdate() {
+        return "/office/update.html";
+    }
+
+    @RequestMapping(value = "toSelect")
+    public String toSelect() {
+        return "/office/select.html";
+    }
+
+    @RequestMapping(value = "doDelete")
+    @ResponseBody
+    public Result doDelete(Integer id) {
+        Result result = new Result();
+        SysOffice sysOffice = new SysOffice();
+        sysOffice.setId(id);
+        sysOffice.setDelFlag("1");
+        int i = sysOfficeService.updateByPrimaryKeySelective(sysOffice);
+        if (i>0){
+            return result;
+        }
+        result.setSuccess(false);
+        result.setMsg("修改失败");
+        return result;
+    }
+
+    @RequestMapping(value = "toAdd")
+    public String toAdd() {
+        return "/office/add.html";
+    }
+
+    @RequestMapping(value = "doInsert",method = RequestMethod.PUT)
+    @ResponseBody
+    public Result doInsert(@RequestBody SysOffice sysOffice) {
+        sysOffice.setParentId(0);
+        sysOffice.setParentIds("0,");
+        Result result = new Result();
+        int i = sysOfficeService.insertSelective(sysOffice);
+        if (i>0){
+            return result;
+        }
+        result.setSuccess(false);
+        result.setMsg("添加失败");
+        return result;
+    }
+
+
 
 }

@@ -192,6 +192,7 @@ let vm=new Vue({
                     if (layer.success!=undefined&&layer.success){
                         layer.msg("更新完成!");
                         this.selectPage() //刷星页面
+                        layer.success=false;
                     }
 
                 }

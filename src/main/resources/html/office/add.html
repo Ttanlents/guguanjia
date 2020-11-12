@@ -1,0 +1,463 @@
+<!-- 头部 -->
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <base href="/guguanjia/"/>
+    <meta charset="utf-8"/>
+    <meta name="renderer" content="webkit">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>固管家服务平台</title>
+
+    <meta name="description" content="index"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="static/bootstrap/bootstrap.min.css"/>
+    <link rel="stylesheet" href="static/css/font-awesome.min.css"/>
+
+    <link rel="stylesheet" href="static/chosen/chosen.min.css"/>
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="static/ace/css/ace.min.css" id="main-ace-style"/>
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="static/ace/css/ace-part2.min.css"/>
+    <![endif]-->
+    <link rel="stylesheet" href="static/ace/css/ace-skins.min.css"/>
+    <link rel="stylesheet" href="static/ace/css/ace-rtl.min.css"/>
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="static/ace/css/ace-ie.min.css"/>
+    <![endif]-->
+
+    <link rel="stylesheet" href="static/ztree/metro.css"/>
+    <link rel="stylesheet" href="static/validate/css/validform.css"/>
+    <link rel="stylesheet" href="static/css/custom.css"/>
+
+    <!--[if !IE]> -->
+    <script src="static/jquery/jquery.js"></script>
+    <!-- <![endif]-->
+
+    <!--[if IE]>
+    <script src="static/jquery/jquery-1.11.1.min.js"></script>
+    <![endif]-->
+
+
+    <!-- ace settings handler -->
+    <script src="static/ace/js/ace-extra.min.js"></script>
+
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+    <!--[if lte IE 8]>
+    <script src="static/bootstrap/html5shiv.min.js"></script>
+    <script src="static/bootstrap/respond.min.js"></script>
+    <script>var ie8 = "ie8";</script>
+    <![endif]-->
+</head>
+
+<body>
+<!-- 顶部条 -->
+
+<!-- 主体 -->
+<div class="main-container" id="main-container">
+
+
+    <div class="main-content">
+
+
+        <div class="page-content">
+
+            <!-- /.ace-settings-container -->
+            <div class="page-header">
+                <h1> 固管家服务平台 编辑 </h1>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="fill-main-content" style="height:100%">
+
+                        <div class="xuboxPageHtml" id="xboxTest" style="overflow-y: auto; height: 457px;">
+
+                                <form enctype="multipart/form-data" name="FormPost" id="office-save-form"
+                                      class="FormGrid" method="post" action="/guguanjia/manager/office/save">
+
+                                    <input type="hidden" value="56" name="id">
+                                    <input type="hidden" value="" name="parentIds">
+                                    <input type="hidden" value="0," name="oldParentIds">
+                                    <table class="EditTable" width="100%">
+                                        <tbody>
+                                        <tr style="display: none;">
+                                            <td class="ui-state-error" id="FormError"></td>
+                                        </tr>
+                                        <tr class="FormData">
+                                            <td class="CaptionTD">单位LOGO</td>
+                                            <td class="DataTD width-100">
+                                                <div class="sbd">
+                                                    <input name="logoFile" type="file" id="logo_input"
+                                                           style="display:none;">
+                                                    <a id="office-logo">
+                                                        <img id="logo" width="60" height="60"
+                                                             :src="office.logo">
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="FormData">
+                                            <td class="CaptionTD"><span class="red">*</span>机构名称</td>
+                                            <td class="DataTD width-100">
+                                                <input type="text" name="name" v-model="office.name">
+                                            </td>
+                                        </tr>
+                                        <tr class="FormData">
+                                            <td class="CaptionTD"><span class="red">*</span>机构类型</td>
+                                            <td class="DataTD width-100">
+                                                <select class="chosen-select " name="type" id="chosen-select"
+                                                        style="display: none;">
+                                                    <option value="1" selected="">
+                                                        公司
+                                                    </option>
+
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr class="FormData" style="display: none;">
+                                            <td class="CaptionTD">上级机构</td>
+                                            <td class="DataTD width-100">
+
+                                                <div class="clearfix width-100  input-group" style="">
+                                                    <input class="form-control search-query" type="text" readonly=""
+                                                           id="poffice" name="" value="">
+                                                    <span class="input-group-btn">
+		<span class="btn btn-purple btn-sm" type="button" style="height: 34px;"  @click="toSelect">
+			<i class="ace-icon fa fa-search bigger-110"></i>
+            查找
+		</span>
+	</span>
+                                                    <input type="hidden" name="parentId" id="poffice_id" value="0">
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                        <tr class="FormData">
+                                            <td class="CaptionTD"><span class="red">*</span>归属区域</td>
+                                            <td class="DataTD width-80">
+
+                                                <div class="clearfix width-80  input-group" style="">
+                                                    <input class="form-control search-query" type="text" readonly=""
+                                                           id="area" name="" value="中国" v-model="office.areaName">
+                                                    <span class="input-group-btn">
+		<span class="btn btn-purple btn-sm" type="button" style="height: 34px;" @click="toSelect">
+			<i class="ace-icon fa fa-search bigger-110"></i>
+            <a>查找</a>
+		</span>
+	</span>
+                                                    <input type="hidden" name="areaId" id="area_id" value="1">
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                        <tr class="FormData" style="display: none;">
+                                            <td class="CaptionTD">区域图标</td>
+                                            <td class="DataTD">
+                                                <div class="width-100 clearfix ">
+                                                    <input type="hidden" value="" name="icon" id="icon-input">
+                                                    <i class="ace-icon  bigger-200 pink"
+                                                       style="vertical-align: middle;padding-right: 10px;"></i>
+                                                    <span class="btn btn-sm btn-purple" id="icon-icon-btn">
+		<i class="ace-icon fa fa-search bigger-110"></i>查找
+	</span>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                        <tr class="FormData">
+                                            <td class="CaptionTD">废物类型</td>
+                                            <td class="DataTD width-100">
+                                                <select name="wasteType" id="wasteType" style="display: none;">
+                                                    <option value="0">请选择废物类型</option>
+                                                    <option value="1">
+                                                        HW01-医疗废物
+                                                    </option>
+                                                    <option value="2">
+                                                        HW02-医药废物
+                                                    </option>
+                                                    <option value="3">
+                                                        HW03-废药物、药品
+                                                    </option>
+                                                    <option value="4">
+                                                        HW04-农药废物
+                                                    </option>
+                                                    <option value="5">
+                                                        HW05-木材防腐剂废物
+                                                    </option>
+                                                    <option value="6">
+                                                        HW06-有机溶剂废物
+                                                    </option>
+                                                    <option value="7">
+                                                        HW07-热处理含氰废物
+                                                    </option>
+                                                    <option value="8">
+                                                        HW08-废矿物油
+                                                    </option>
+                                                    <option value="9">
+                                                        HW09-油/水、烃/水混合物或乳化液
+                                                    </option>
+                                                    <option value="10">
+                                                        HW10-多氯（溴）联苯类废物
+                                                    </option>
+                                                    <option value="11">
+                                                        HW11-精（蒸）馏残渣
+                                                    </option>
+                                                    <option value="12">
+                                                        HW12-染料、涂料废物
+                                                    </option>
+                                                    <option value="13">
+                                                        HW13-有机树脂类废物
+                                                    </option>
+                                                    <option value="14">
+                                                        HW14-新化学药品废物
+                                                    </option>
+                                                    <option value="15">
+                                                        HW15-爆炸性废物
+                                                    </option>
+                                                    <option value="16">
+                                                        HW16-感光材料废物
+                                                    </option>
+                                                    <option value="17">
+                                                        HW17-表面处理废物
+                                                    </option>
+                                                    <option value="18">
+                                                        HW18-焚烧处置残渣
+                                                    </option>
+                                                    <option value="19">
+                                                        HW19-含金属羰基化合物废物
+                                                    </option>
+                                                    <option value="20">
+                                                        HW20-含铍废物
+                                                    </option>
+                                                    <option value="21">
+                                                        HW21-含铬废物
+                                                    </option>
+                                                    <option value="22">
+                                                        HW22-含铜废物
+                                                    </option>
+                                                    <option value="23">
+                                                        HW23-含锌废物
+                                                    </option>
+                                                    <option value="24">
+                                                        HW24-含砷废物
+                                                    </option>
+                                                    <option value="25">
+                                                        HW25-含硒废物
+                                                    </option>
+                                                    <option value="26">
+                                                        HW26-含镉废物
+                                                    </option>
+                                                    <option value="27">
+                                                        HW27-含锑废物
+                                                    </option>
+                                                    <option value="28">
+                                                        HW28-含碲废物
+                                                    </option>
+                                                    <option value="29">
+                                                        HW29-含汞废物
+                                                    </option>
+                                                    <option value="30">
+                                                        HW30-含铊废物
+                                                    </option>
+                                                    <option value="31">
+                                                        HW31-含铅废物
+                                                    </option>
+                                                    <option value="32">
+                                                        HW32-无机氟化物废物
+                                                    </option>
+                                                    <option value="33">
+                                                        HW33-无机氰化物废物
+                                                    </option>
+                                                    <option value="34">
+                                                        HW34-废酸
+                                                    </option>
+                                                    <option value="35">
+                                                        HW35-废碱
+                                                    </option>
+                                                    <option value="36">
+                                                        HW36-石棉废物
+                                                    </option>
+                                                    <option value="37">
+                                                        HW37-有机磷化合物废物
+                                                    </option>
+                                                    <option value="38">
+                                                        HW38-有机氰化物废物
+                                                    </option>
+                                                    <option value="39">
+                                                        HW39-含酚废物
+                                                    </option>
+                                                    <option value="40">
+                                                        HW40-含醚废物
+                                                    </option>
+                                                    <option value="41">
+                                                        HW41-废卤化有机溶剂
+                                                    </option>
+                                                    <option value="42">
+                                                        HW42-废有机溶剂
+                                                    </option>
+                                                    <option value="43">
+                                                        HW43-含多氯苯并呋喃类废物
+                                                    </option>
+                                                    <option value="44">
+                                                        HW44-含多氯苯并二恶英废物
+                                                    </option>
+                                                    <option value="45">
+                                                        HW45-含有机卤化物废物
+                                                    </option>
+                                                    <option value="46">
+                                                        HW46-含镍废物
+                                                    </option>
+                                                    <option value="47">
+                                                        HW47-含钡废物
+                                                    </option>
+                                                    <option value="48">
+                                                        HW48-有色金属冶炼废物
+                                                    </option>
+                                                    <option value="49">
+                                                        HW49-其他废物
+                                                    </option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr class="FormData">
+                                            <td class="CaptionTD">危废</td>
+                                            <td class="DataTD width-100">
+                                                <select data-placeholder="请选择危废" id="waste" style="display: none;">
+                                                    <option value="0">请选择废物类型</option>
+                                                </select>
+
+                                            </td>
+                                        </tr>
+                                        <tr class="FormData">
+                                            <td class="CaptionTD"></td>
+                                            <td class="DataTD width-100" id="selectedWaste">
+
+                                            </td>
+                                        </tr>
+                                        <tr class="FormData">
+                                            <td class="CaptionTD">负责人</td>
+                                            <td class="DataTD width-100">
+                                                <input type="text" name="master" v-model="office.master">
+                                            </td>
+                                        </tr>
+                                        <tr class="FormData">
+                                            <td class="CaptionTD">电话</td>
+                                            <td class="DataTD width-100">
+                                                <input type="text" name="phone" v-model="office.phone">
+                                            </td>
+                                        </tr>
+                                        <tr class="FormData">
+                                            <td class="CaptionTD">邮箱</td>
+                                            <td class="DataTD width-100">
+                                                <input type="text" name="email" v-model="office.email">
+                                            </td>
+                                        </tr>
+                                        <tr class="FormData">
+                                            <td class="CaptionTD">联系地址</td>
+                                            <td class="DataTD width-100">
+                                                <input type="text" name="address" v-model="office.address">
+                                            </td>
+                                        </tr>
+                                        <tr class="FormData">
+                                            <td class="CaptionTD">邮政编码</td>
+                                            <td class="DataTD width-100">
+                                                <input type="text" name="zip_code" v-model="office.zipCode">
+                                            </td>
+                                        </tr>
+                                        <tr class="FormData">
+                                            <td class="CaptionTD">传真</td>
+                                            <td class="DataTD width-100">
+                                                <input type="text" name="fax" v-model="office.fax">
+                                            </td>
+                                        </tr>
+                                        <tr class="FormData">
+                                            <td class="CaptionTD">机构描述</td>
+                                            <td class="DataTD width-100">
+                                                <!--  富文本区域-->
+                                                <!-- 加载编辑器的容器 -->
+                                                <vue-ueditor-wrap :config="myConfig" v-model="office.remarks">
+
+                                                </vue-ueditor-wrap>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                            <div class="width-100 clearfix" tag-save-btn=""
+                                 style="bottom: -36px; left: 0px; position: absolute;">
+	<span class="btn btn-primary btn-sm bigger-110 width-50  pull-left" id="office-save-btn" @click="doInsert">
+		<i class="ace-icon fa fa-floppy-o align-top bigger-125"></i> 提交
+	</span>
+                                <span class="btn btn-yellow btn-sm bigger-110 width-50 pull-right"
+                                      id="office-save-cancel">
+		<i class="ace-icon fa fa-times align-top  bigger-125"></i> 取 消
+	</span>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div><!-- /.page-content -->
+
+    </div><!-- /.main-content -->
+
+    <a href="javascript:void(0);" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse" style="z-index:1111">
+        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+    </a>
+</div><!-- /.main-container -->
+
+<!-- 底部 -->
+<!-- basic scripts -->
+
+
+<script type="text/javascript">
+    if ('ontouchstart' in document.documentElement) document.write("<script src='static/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+</script>
+<script src="static/bootstrap/bootstrap.min.js"></script>
+
+<!-- ace scripts -->
+<script src="static/ace/js/ace-elements.min.js"></script>
+<script src="static/ace/js/ace.min.js"></script>
+
+<script type="text/javascript">
+    var ctxPath = "..";
+    window.onload = function () {
+        /* $("#ace-settings-navbar").trigger("click");//固定头部导航栏
+        $("#ace-settings-sidebar").trigger("click");//固定左侧菜单
+        $("#ace-settings-highlight").trigger("click"); */
+    };
+</script>
+
+<!-- 引入其他js -->
+<script src="static/js/history.js"></script>
+<script type="text/javascript" src="static/layer/layer.js"></script>
+<script type="text/javascript" src="static/js/spin.min.js"></script>
+<script type="text/javascript" src="static/ztree/jquery.ztree.all-3.5.min.js"></script>
+<script type="text/javascript" src="static/js/jquery.autosize.min.js"></script>
+<script type="text/javascript" src="static/chosen/chosen.jquery.min.js"></script>
+<script type="text/javascript" src="static/validate/Validform_v5.3.2_min.js"></script>
+<script type="text/javascript" src="static/js/jquery.form.js"></script>
+<script type="text/javascript" src="static/js/bootstrap-contextmenu.js"></script>
+<script type="text/javascript" src="static/js/jquery.nicescroll.min.js"></script>
+<script type="text/javascript" src="static/js/public.js"></script>
+
+<script type="text/javascript" src="static/vue/vue.js"></script>
+<script type="text/javascript" src="static/vue/axios.js"></script>
+<script type="text/javascript" src="static/vue/vue.js"></script>
+<script type="text/javascript" src="static/vue/axios.js"></script>
+<script type="text/javascript" src="static/vue/vue-ueditor-wrap.min.js"></script>
+<script type="text/javascript" src="static/js/office/add.js"></script>
+
+</body>
+</html>
