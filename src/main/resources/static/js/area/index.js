@@ -176,6 +176,20 @@ let vm=new Vue({
                 })
 
         },
+        toDetail:function(area){
+            layer.obj=area;
+            layer.open({
+                type:2,
+                title:false,
+                area:['80%','80%'],
+                content:['sysArea/toDetail'],
+                end:()=>{
+                    if (layer.success!=undefined&&layer.success){
+                        layer.msg('关闭')
+                    }
+                }
+            });
+        },
         doDelete:function (area) {
             let id=area.id;
             let name=area.name;

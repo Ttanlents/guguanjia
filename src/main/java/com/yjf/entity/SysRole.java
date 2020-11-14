@@ -1,6 +1,7 @@
 package com.yjf.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -14,6 +15,7 @@ public class SysRole {
      * 编号
      */
     @Id
+    @KeySql(useGeneratedKeys = true)
     private Integer id;
 
     /**

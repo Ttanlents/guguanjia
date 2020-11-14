@@ -19,4 +19,10 @@ public interface SysRoleService  extends BaseService<SysRole,Integer>{
      int insertNoRole(Integer roleId,List<Integer> userIds);
 
      int updateByPrimaryKeySelective(Map<String,Object> map);
+
+     List<String> selectAuthorityByRoleId(Integer roleId);
+
+     List<String> selectAssignmentUserByRoleId(Integer roleId);
+
+     int insertSelective(Map<String,Object> map);
 }

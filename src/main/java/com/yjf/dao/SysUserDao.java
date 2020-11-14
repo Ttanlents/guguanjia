@@ -2,9 +2,7 @@ package com.yjf.dao;
 
 import com.yjf.entity.SysUser;
 import com.yjf.provider.SysUserProvider;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.annotations.*;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
@@ -34,5 +32,12 @@ public interface SysUserDao extends Mapper<SysUser> {
             "FROM\n" +
             "\tsys_user_role sur where sur.role_id=#{roleId} and sus.id=sur.user_id)")
     List<SysUser> selectNoRole(@Param("officeId")Integer officeId, @Param("roleId") Integer roleId);
+
+
+    @Update("update sys_user_role set role_id=#{roleId}  where user_id=#{userId}")
+    int updateRoleByUserId(@Param("userId")Integer userId, @Param("roleId") String roleId);
+
+    @Insert("insert into sys_user_role VALUES(DEFAULT,#{roleId},#{userId},#{createBy},NOW(),#{createBy},NOW(),'0')")
+    int insertUserRole(@Param("userId")Integer userId, @Param("roleId") String roleId,@Param("createBy") String createBy);
 
 }

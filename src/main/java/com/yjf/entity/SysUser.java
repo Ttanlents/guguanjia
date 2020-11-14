@@ -1,5 +1,7 @@
 package com.yjf.entity;
 
+import tk.mybatis.mapper.annotation.KeySql;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -12,6 +14,7 @@ public class SysUser {
      * 编号
      */
     @Id
+    @KeySql(useGeneratedKeys = true)
     private Integer id;
 
     /**
@@ -133,6 +136,8 @@ public class SysUser {
 
     @Transient
     private String roleId;
+
+
 
     public String getRoleId() {
         return roleId;

@@ -301,10 +301,7 @@
                                             <tbody>
                                             <tr v-for="sysUser in pageInfo.list">
                                                 <td class="center">
-                                                    <a href="user-detail.html"
-                                                       data-title="<超级管理员>详情" data-mode="detail"
-                                                       data-url="sysuser/detail/showlayer"
-                                                       data-data="{id:'2'}"
+                                                    <a  @click="toDetail(sysUser)"
                                                     >{{sysUser.name}}</a>
                                                 </td>
                                                 <td class="center">

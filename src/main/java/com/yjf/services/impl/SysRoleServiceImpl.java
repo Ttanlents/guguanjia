@@ -9,6 +9,7 @@ import com.yjf.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -55,15 +56,27 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole,Integer> impleme
         }
         List<Integer> _resources=null;
         if (map.containsKey("_resources")){
-            _resources=( List<Integer>) map.get("_resources");
+            _resources=( List<Integer>) map.get("_resources");  //旧的
         }
 
-        if(resources.size()==_resources.size()&&resources.containsAll(_resources)){//完全一致
+
+        //第一步  为角色分配菜单权限 表：sys_role_resource
+        if(resources==null&&_resources==null){
+            //不更新
+            System.out.println("数据一致，不更新权限");
+        }else if(resources!=null&&_resources!=null
+                &&resources.size()==_resources.size()
+                &&resources.containsAll(_resources)){//完全一致
             System.out.println("数据一致，不更新权限");
         }else{
             sysRoleDao.deleteResourcesByRoleId(sysRole.getId());
-            sysRoleDao.insertRoleResources(sysRole.getId(),resources);
+            if(resources.size()>0){//原来有授权，现在取消授权的情况，只删除，不插入
+                sysRoleDao.insertRoleResources(sysRole.getId(),resources);
+            }
+
         }
+
+
 
         List<Integer> office = null;
         if(map.containsKey("offices")){
@@ -73,6 +86,9 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole,Integer> impleme
         if(map.containsKey("_offices")){
             _office = (List<Integer>) map.get("_offices");
         }
+
+
+        //第二步  分角色 夸机构授权 表：sys_role_office
         if(office==null&&_office==null){
             //不更新
             System.out.println("数据一致，不更新权限");
@@ -88,6 +104,45 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole,Integer> impleme
 
         }
         return 1;
+
+    }
+
+    @Override
+    public List<String> selectAuthorityByRoleId(Integer roleId) {
+        return sysRoleDao.selectAuthorityByRoleId(roleId);
+    }
+
+    @Override
+    public List<String> selectAssignmentUserByRoleId(Integer roleId) {
+        return sysRoleDao.selectAssignmentUserByRoleId(roleId);
+    }
+
+    @Override
+    public int insertSelective(Map<String,Object> map) {
+        int i=0;
+        SysRole sysRole=null;
+        if (map.containsKey("role")&&!StringUtils.isEmpty(map.get("role"))){
+            Object role = map.get("role");
+            String json = JsonUtils.pojoToJson(role);
+             sysRole = JsonUtils.jsonToPojo(json, SysRole.class);
+            sysRole.setCreateDate(new Date());
+            i+=sysRoleDao.insertSelective(sysRole);
+        }
+        List<Integer> resources=null;
+        if (map.containsKey("resources")){
+            resources=( List<Integer>) map.get("resources");
+        }
+        List<Integer> office = null;
+        if(map.containsKey("offices")){
+            office = (List<Integer>) map.get("offices");
+        }
+        if (resources!=null&&resources.size()>0){
+          i+=  sysRoleDao.insertRoleResources(sysRole.getId(),resources);
+        }
+        if (office!=null&&office.size()>0){
+            i+=  sysRoleDao.insertRoleOffices(sysRole.getId(),office);
+        }
+        return i;
 
     }
 }

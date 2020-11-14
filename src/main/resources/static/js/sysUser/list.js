@@ -198,6 +198,20 @@ let vm=new Vue({
                 }
             })
         },
+        toDetail:function(sysUser){
+            layer.obj=sysUser;
+            layer.open({
+                type:2,
+                title:false,
+                area:['80%','80%'],
+                content:['sysUser/toDetail'],
+                end:()=>{
+                    if (layer.success!=undefined&&layer.success){
+                        layer.msg('关闭')
+                    }
+                }
+            });
+        },
         doDelete:function (sysUser) {
             layer.confirm(`你确定要删除${sysUser.name}吗？`,{
                 btn: ['确定','取消'],

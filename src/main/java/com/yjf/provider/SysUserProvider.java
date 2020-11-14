@@ -18,9 +18,9 @@ public class SysUserProvider {
                     "sr.`name` role_name " +
                     "FROM " +
                     "sys_user su " +
-                    "LEFT JOIN sys_office so ON su.office_id = so.id  " +
-                    "left join sys_role_office sro on so.id=sro.office_id " +
-                    "left join sys_role sr on sr.id=sro.role_id  ");
+                    "LEFT JOIN sys_office so ON su.office_id = so.id " +
+                    "left join sys_user_role sur on su.id=sur.user_id " +
+                    "left join sys_role sr on sr.id=sur.role_id  ");
             WHERE("su.del_flag = '0' ");
             if (!StringUtils.isEmpty(sysUser.getOfficeId())){
                 WHERE("su.office_id=#{officeId} ");

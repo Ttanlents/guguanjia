@@ -33,6 +33,11 @@ public class SysUserController {
         return "/user/update.html";
     }
 
+    @RequestMapping("toDetail")
+    public String toDetail(){
+        return "/user/detail.html";
+    }
+
     @RequestMapping("selectPage/{pageNum}/{pageSize}")
     @ResponseBody
     public Result selectPage(@PathVariable Integer pageNum, @PathVariable Integer pageSize, SysUser sysUser) {
@@ -47,7 +52,7 @@ public class SysUserController {
     public Result doSave(@RequestBody SysUser sysUser, HttpSession session) {
         Result result = new Result( );
         int i = sysUserService.insertSelective(sysUser,session);
-        if (i>0){
+        if (i>=2){
             return result;
         }
         result.setSuccess(false);
@@ -66,7 +71,7 @@ public class SysUserController {
         }
         Result result = new Result( );
         int i = sysUserService.updateByPrimaryKeySelective(sysUser,session);
-        if (i>0){
+        if (i>=2){
             return result;
         }
         result.setSuccess(false);

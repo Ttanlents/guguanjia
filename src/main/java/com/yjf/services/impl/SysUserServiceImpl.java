@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.yjf.dao.SysUserDao;
 import com.yjf.entity.SysUser;
 import com.yjf.services.SysUserService;
+import com.yjf.utils.EncryptUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,6 +46,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, Integer> implem
 
     @Override
     public int insertSelective(SysUser sysUser, HttpSession session) {
+        int i=0;
         sysUser.setCompanyId(sysUser.getOfficeId());
         sysUser.setCreateDate(new Date());
         sysUser.setUpdateDate(new Date());
@@ -62,16 +64,22 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, Integer> implem
         }else {
             sysUser.setUserType("0");
         }
-        return super.insertSelective(sysUser);
+        sysUser.setPassword(EncryptUtils.MD5_HEX(EncryptUtils.MD5_HEX(sysUser.getPassword())+sysUser.getUsername()));
+        i+= super.insertSelective(sysUser);
+        i+=sysUserDao.insertUserRole(sysUser.getId(),sysUser.getRoleId(),loginUser.getName());
+        return i;
     }
 
     @Override
     public int updateByPrimaryKeySelective(SysUser sysUser,HttpSession session) {
+        int i=0;
         sysUser.setUpdateDate(new Date());
         SysUser loginUser = (SysUser)session.getAttribute("loginUser");
         if (loginUser!=null){
             sysUser.setUpdateBy(loginUser.getName());
         }
-        return super.updateByPrimaryKeySelective(sysUser);
+        i+= super.updateByPrimaryKeySelective(sysUser);
+        i+=sysUserDao.updateRoleByUserId(sysUser.getId(),sysUser.getRoleId());
+        return i;
     }
 }

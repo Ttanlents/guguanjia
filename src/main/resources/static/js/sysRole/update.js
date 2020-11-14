@@ -3,7 +3,6 @@ let vm=new Vue({
     data:function () {
         return {
             newRoleId:{},
-            treeObj:{},
             myRole:{},
             setting: {
                 data: {
@@ -21,6 +20,7 @@ let vm=new Vue({
                     chkboxType : {"Y": "p", "N": "s"}
                 }
             },
+            treeObj:{},
             nodes:{},
             _nodes:{},
 
@@ -62,9 +62,6 @@ let vm=new Vue({
             }
 
             if(this.officeTreeObj!=''){
-                console.log("this.officeTreeObj");
-                console.log(this.officeTreeObj);
-
                 let offices=this.officeTreeObj.getCheckedNodes(true);  //获取当前被选中授权公司
                 if(offices.length>0&&offices[0].id==0){//第一个资源是全部权限，需要删除
                     offices.splice(0,1);
@@ -146,7 +143,7 @@ let vm=new Vue({
                         "name": "所有权限",
                         // "checked":true   //设置默认选中
                     };
-                  this.treeObj=  $.fn.zTree.init($('#select-treetreeSelectResEdit'), this.setting, this.nodes);
+                    this.treeObj=  $.fn.zTree.init($('#select-treetreeSelectResEdit'), this.setting, this.nodes);
                     this.selectResourceByRoleId();
                 }
             }).catch();
@@ -157,7 +154,7 @@ let vm=new Vue({
             }).then(response => {
                 if (response.data.success) {
                     this.officeNodes = response.data.obj;
-                    this.officeNodes[this.nodes.length]={
+                    this.officeNodes[this.officeNodes.length]={
                         "id": 0,
                         "name": "所有机构",
                     };

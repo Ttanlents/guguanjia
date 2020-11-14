@@ -7,10 +7,8 @@ import com.yjf.utils.IPUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -21,8 +19,8 @@ import java.util.Objects;
  * @date 2020/9/30 11:41
  * @Description
  */
-@Component
-@Aspect
+//@Component
+//@Aspect
 public class SysLogAspect {
     @Autowired
     SysLogService sysLogService;

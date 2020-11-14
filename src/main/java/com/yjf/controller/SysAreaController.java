@@ -160,6 +160,11 @@ public class SysAreaController {
         return "/modules/module.html";
     }
 
+    @RequestMapping(value = "toDetail")
+    public String toDetail() {
+        return "/area/area-detail.html";
+    }
+
     @RequestMapping("selectAll")
     @ResponseBody
     public Result selectAll() {

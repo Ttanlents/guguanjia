@@ -35,4 +35,10 @@ public interface SysRoleDao extends Mapper<SysRole> {
 
     @Delete("DELETE from sys_role_resource WHERE role_id=#{id}")
     int deleteOfficeByRoleId(@Param("id") Integer id);
+
+    @Select("select sys_resource.name from sys_role_resource,sys_resource where sys_role_resource.role_id=#{roleId} and sys_role_resource.resource_id=sys_resource.id")
+    List<String> selectAuthorityByRoleId(@Param("roleId") Integer roleId);
+
+    @Select("select sys_user.name from sys_user_role,sys_user where sys_user_role.role_id=#{roleId} and sys_user_role.user_id=sys_user.id")
+    List<String> selectAssignmentUserByRoleId(@Param("roleId") Integer roleId);
 }

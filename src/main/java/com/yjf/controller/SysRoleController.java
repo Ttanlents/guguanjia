@@ -32,6 +32,29 @@ public class SysRoleController {
         return "/role/role-select.html";
     }
 
+    @RequestMapping("toDetail")
+    public String toDetail() {
+        return "/role/role-detail.html";
+    }
+
+    @RequestMapping("getAuthority")
+    @ResponseBody
+    public Result getAuthority(Integer id) {
+        Result result = new Result();
+        List<String> resources = sysRoleService.selectAuthorityByRoleId(id);
+        result.setObj(resources);
+        return result;
+    }
+
+    @RequestMapping("getAssignment")
+    @ResponseBody
+    public Result getAssignment(Integer id) {
+        Result result = new Result();
+        List<String> resources = sysRoleService.selectAssignmentUserByRoleId(id);
+        result.setObj(resources);
+        return result;
+    }
+
     @RequestMapping("toIndex")
     public String toIndex() {
         return "/role/role.html";
@@ -100,7 +123,7 @@ public class SysRoleController {
         return result;
     }
 
-    @RequestMapping("doUpdate")
+    @RequestMapping(value = "doUpdate", method = RequestMethod.PUT)
     @ResponseBody
     public Result doUpdate(@RequestBody Map<String, Object> map) {
         Result result = new Result();
@@ -110,6 +133,19 @@ public class SysRoleController {
         }
         result.setSuccess(false);
         result.setMsg("更新失败！");
+        return result;
+    }
+
+    @RequestMapping(value = "doInsert", method = RequestMethod.POST)
+    @ResponseBody
+    public Result doInsert(@RequestBody Map<String, Object> map) {
+        Result result = new Result();
+        int i = sysRoleService.insertSelective(map);
+        if (i > 0) {
+            return result;
+        }
+        result.setSuccess(false);
+        result.setObj("添加失败");
         return result;
     }
 

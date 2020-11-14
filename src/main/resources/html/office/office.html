@@ -230,12 +230,7 @@
                                                 <tbody>
                                                 <tr v-for="office in result">
                                                     <td class="center">
-                                                        <a href="detail.html"
-                                                           data-title="<固管家服务平台>详情" data-mode="detail"
-                                                           data-url="office/detail/showlayer"
-                                                           data-data="{id:'56'}"
-                                                           data-width="50%"
-                                                        >(<b>公司</b>){{office.name}}</a>
+                                                        <a @click="toDetail(office)">(<b>公司</b>){{office.name}}</a>
                                                     </td>
                                                     <td class="center" style="display: none;">
 

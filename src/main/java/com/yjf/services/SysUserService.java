@@ -19,5 +19,6 @@ public interface SysUserService  extends BaseService<SysUser,Integer> {
    List<SysUser> selectNoRole(Integer officeId,  Integer roleId);
 
    int insertSelective(SysUser sysUser, HttpSession session);
+
    int updateByPrimaryKeySelective(SysUser sysUser,HttpSession session);
 }

@@ -90,6 +90,21 @@ let vm=new Vue({
             })
 
         },
+        toDetail:function(office){
+            layer.obj2=office;
+
+            layer.open({
+                type:2,
+                title:false,
+                area:['80%','80%'],
+                content:['sysOffice/toDetail'],
+                end:()=>{
+                    if (layer.success!=undefined&&layer.success){
+                        layer.msg('关闭')
+                    }
+                }
+            });
+        },
         initTree:function () {
             axios({
                 url:'sysOffice/select',

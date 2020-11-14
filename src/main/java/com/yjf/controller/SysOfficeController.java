@@ -74,6 +74,11 @@ public class SysOfficeController {
         return "/office/select.html";
     }
 
+    @RequestMapping(value = "toDetail")
+    public String toDetail() {
+        return "/office/detail.html";
+    }
+
     @RequestMapping(value = "doDelete")
     @ResponseBody
     public Result doDelete(Integer id) {

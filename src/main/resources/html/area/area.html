@@ -238,10 +238,7 @@
                                                 <tbody>
                                                 <tr v-for="area in pageInfo.list">
                                                     <td class="center">
-                                                        <a href="area-detail.html"
-                                                           data-title="<重庆市>详情" data-mode="detail"
-                                                           data-url="area/detail/showlayer"
-                                                           data-data="{id:'2'}"
+                                                        <a @click="toDetail(area)"
                                                         >{{area.name}}</a>
                                                     </td>
                                                     <td class="center">
